@@ -171,4 +171,7 @@ This project is released under the MIT License; see [LICENSE](LICENSE).
 
 ## Acknowledgements
 
-We thank the [BEHAVIOR-1K](https://github.com/StanfordVL/BEHAVIOR-1K) team.
+We thank the [BEHAVIOR-1K](https://github.com/StanfordVL/BEHAVIOR-1K),
+[DINOv3](https://github.com/facebookresearch/dinov3),
+[CoTracker3](https://github.com/facebookresearch/co-tracker), and
+[SAM2](https://github.com/facebookresearch/sam2) teams.
