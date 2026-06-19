@@ -26,4 +26,6 @@ __pycache__/
 # ===================
 # Dataset
 # ===================
-data/
+data/*
+!data/robot/
+!data/robot/**
