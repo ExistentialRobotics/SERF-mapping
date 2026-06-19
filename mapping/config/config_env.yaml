@@ -1,0 +1,149 @@
+# =============================================================================
+# Neural Point Map Configuration
+# Used by: mapping/train_neural_points_env.py, tasks/latent_mapping_task.py
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Run Settings
+# -----------------------------------------------------------------------------
+num_images: -1           # Number of images per episode (-1 for all)
+
+# -----------------------------------------------------------------------------
+# Paths (can be overridden by command line arguments)
+# -----------------------------------------------------------------------------
+# For standalone training:
+#   dataset_dir: path to HDF5 files
+#   output_dir: where to save neural_points.pt and decoder.pt
+#
+# For distributed training (tasks/latent_mapping_task.py):
+#   These are overridden by --data_dir and --models_dir arguments
+
+dataset_dir: "data/mapping_dataset/task-0021/train"
+output_dir: "data/map_models/task-0021"
+
+# Optional: Resume from a previous run
+# load_run_dir: "data/map_models/task-0021/runs/task-0021_20251209-135815"
+
+# -----------------------------------------------------------------------------
+# Dataset Settings
+# -----------------------------------------------------------------------------
+dataset:
+  original_image_size: 480  # Original image size in HDF5 files
+
+# -----------------------------------------------------------------------------
+# Vision Model Settings
+# -----------------------------------------------------------------------------
+# Currently only "dino" is supported for pre-computed embeddings
+# The embeddings are stored in HDF5 files under the 'dino' key
+model_type: "dino"
+
+# DINOv3 (text-aligned) model configuration
+# Used when computing DINO features on-the-fly (not for pre-computed)
+dino_model:
+  image_size: 480
+  patch_size: 16
+  # Note: Weight URLs expire periodically. Update from:
+  # https://github.com/facebookresearch/dinov3
+  backbone_weights_url: null   # Set if computing features on-the-fly
+  dinotxt_weights_url: null    # Set if computing features on-the-fly
+
+# -----------------------------------------------------------------------------
+# Neural Point Map Settings
+# -----------------------------------------------------------------------------
+point_map:
+  voxel_size: 0.02         # Voxel size in meters
+  knn_k: 10                # K for KNN feature interpolation
+  feature_dim: 64            # Dimension of learned point features
+  hash_table_size: 8388608   # 2^23
+  num_nei_cells: 2           # Number of neighboring cells to consider
+  search_alpha: 0.5            # Search radius multiplier
+  temperature: 0.05            # Softmax temperature for distance weighting
+
+# -----------------------------------------------------------------------------
+# Decoder Settings
+# -----------------------------------------------------------------------------
+decoder:
+  hidden_dim: 384            # Hidden layer dimension
+  num_res_blocks: 2          # Number of residual blocks
+  dropout: 0.2               # Dropout probability
+  train_decoder: true        # Train decoder (false = freeze weights)
+
+# -----------------------------------------------------------------------------
+# Encoder Settings
+# -----------------------------------------------------------------------------
+encoder:
+  hidden_dim: 384            # Hidden layer dimension
+  num_res_blocks: 2         # Number of residual blocks
+  dropout: 0.2              # Dropout probability
+  use_encoder_init: false  # Use encoder for point initialization
+  train_encoder: true       # Train encoder with consistency loss
+
+# -----------------------------------------------------------------------------
+# Training Settings
+# -----------------------------------------------------------------------------
+training:
+  epochs: 20                 # Number of training epochs
+  batch_size: 32             # Batch size for training
+  optimizer_lr: 0.001        # Learning rate
+  log_interval: 100          # Logging interval (iterations)
+  save_interval: 10           # Checkpoint save interval (epochs)
+
+  # Inter-category contrastive loss: same category = positive, different = negative
+  lambda_inter: 0.02         # Weight for inter-category loss (0 to disable)
+  inter_temperature: 0.1     # Temperature for softmax
+  inter_max_samples: 2048    # Total features in inter loss; split equally per category
+  cross_scene_inter: false   # false=single-scene, true=cross-scene (all maps, balanced)
+
+  # Intra-instance contrastive loss: same SAM segment = positive, different = negative
+  lambda_intra: 0.01         # Weight for intra-instance loss (0 to disable)
+  intra_temperature: 0.1     # Softmax temperature
+  intra_max_samples: 16384   # Max samples
+
+  # Encoder-Decoder consistency loss
+  lambda_consistency: 1.0    # Weight for consistency loss
+
+# -----------------------------------------------------------------------------
+# Wandb Settings
+# -----------------------------------------------------------------------------
+wandb:
+  enabled: false             # Set true to enable wandb logging
+  project: "neural-point-map"  # Wandb project name
+
+# -----------------------------------------------------------------------------
+# Scene Bounds
+# -----------------------------------------------------------------------------
+# World coordinate bounds for filtering points
+# Adjust these based on your scene
+scene_min: [20.0, 5.3, -0.1]
+scene_max: [24.4, 8.3, 2.8]
+
+# -----------------------------------------------------------------------------
+# Distributed Training Settings (tasks/latent_mapping_task.py)
+# -----------------------------------------------------------------------------
+distributed:
+  num_episodes: 5           # Number of episodes per run (-1 for all)
+
+# -----------------------------------------------------------------------------
+# Visualization Settings
+# -----------------------------------------------------------------------------
+visualization:
+  enabled: false             # Set true to enable PCA visualization (requires viser server)
+  interval: 1                # Visualization interval (epochs)
+
+  # Filtering options
+  include_categories: []     # Categories to include (whitelist mode, empty = all)
+  filter_background: false   # Filter out background categories
+
+  # Display options
+  max_points: 1000000        # Maximum points to visualize
+  point_size: 0.005          # Point size in viser
+  z_threshold: 2.5           # Maximum Z value to display
+  side_by_side_offset: 1.2   # X offset multiplier for side-by-side view
+
+  # PCA options
+  n_components: 3            # Number of PCA components (3 for RGB)
+  whiten: true               # Apply whitening to PCA
+
+  # Color normalization (quantile clipping)
+  quantile_low: 0.02         # Lower quantile for color normalization
+  quantile_high: 0.98        # Upper quantile for color normalization

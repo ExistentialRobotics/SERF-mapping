@@ -1,0 +1,83 @@
+# =============================================================================
+# Robot Neural Point Map Configuration
+# Used by: mapping/train_neural_points_robot.py
+# Defaults mirror mapping/config/config_env.yaml
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
+input_path: "data/mapping_dataset/robot/robot_data.hdf5"
+output_dir: "data/map_models/robot"
+
+# -----------------------------------------------------------------------------
+# Robot Settings
+# -----------------------------------------------------------------------------
+robot:
+  voxel_size: 0.02           # Surface sampler voxel size (meters)
+
+# -----------------------------------------------------------------------------
+# Point Feature Settings (from mapping/config/config_env.yaml)
+# -----------------------------------------------------------------------------
+point_map:
+  feature_dim: 64            # Dimension of learned per-point features
+  knn_k: 10                # K for KNN feature interpolation
+  temperature: 0.05          # Softmax temperature for distance weighting
+
+# -----------------------------------------------------------------------------
+# Decoder Settings
+# -----------------------------------------------------------------------------
+decoder:
+  hidden_dim: 384            # Hidden layer dimension
+  num_res_blocks: 2          # Number of residual blocks
+  dropout: 0.2               # Dropout probability
+  train_decoder: true        # Train decoder (false = freeze weights)
+
+# -----------------------------------------------------------------------------
+# Training Settings
+# -----------------------------------------------------------------------------
+training:
+  epochs: 20                 # Number of training epochs
+  batch_size: 32             # Frames per batch (same robot state)
+  optimizer_lr: 0.001        # Learning rate
+  log_interval: 100          # Logging interval (iterations)
+  save_interval: 1           # Checkpoint save interval (epochs)
+
+  # Part-level contrastive loss (seg_instance_id-based)
+  lambda_contrastive: 0.01    # Weight for contrastive loss (0 to disable)
+  contrastive_temperature: 0.1  # InfoNCE temperature
+  contrastive_max_samples: 16384  # Max samples for memory efficiency
+
+# -----------------------------------------------------------------------------
+# Vision Model Settings
+# -----------------------------------------------------------------------------
+dino_model:
+  image_size: 480
+  patch_size: 16
+
+# -----------------------------------------------------------------------------
+# Wandb Settings
+# -----------------------------------------------------------------------------
+wandb:
+  enabled: false             # Set true to enable wandb logging
+  project: "robot-neural-points"  # Wandb project name
+
+# -----------------------------------------------------------------------------
+# Visualization Settings
+# -----------------------------------------------------------------------------
+visualization:
+  enabled: false            # Set true to enable PCA visualization (requires viser server)
+  interval: 1                # Visualization interval (epochs)
+
+  # Display options
+  max_points: 1000000        # Maximum points to visualize
+  point_size: 0.005          # Point size in viser
+  side_by_side_offset: 1.2   # X offset multiplier for side-by-side view
+
+  # PCA options
+  n_components: 3            # Number of PCA components (3 for RGB)
+  whiten: true               # Apply whitening to PCA
+
+  # Color normalization (quantile clipping)
+  quantile_low: 0.02         # Lower quantile for color normalization
+  quantile_high: 0.98        # Upper quantile for color normalization

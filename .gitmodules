@@ -1,0 +1,16 @@
+[submodule "dinov3"]
+	path = external/dinov3
+	url = https://github.com/facebookresearch/dinov3.git
+	ignore = dirty
+[submodule "co-tracker"]
+	path = external/co-tracker
+	url = https://github.com/facebookresearch/co-tracker.git
+	ignore = dirty
+[submodule "external/sam2"]
+	path = external/sam2
+	url = https://github.com/facebookresearch/sam2.git
+	ignore = dirty
+[submodule "external/BEHAVIOR-1K"]
+	path = external/BEHAVIOR-1K
+	url = https://github.com/StanfordVL/BEHAVIOR-1K.git
+	ignore = dirty

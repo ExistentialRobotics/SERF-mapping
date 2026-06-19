@@ -1,0 +1,32 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
+numpy==1.26.4
+h5py
+PyYAML
+tqdm
+scipy
+opencv-python
+imageio
+imageio-ffmpeg
+open3d
+yourdfpy
+viser
+wandb
+tensorboard
+pandas
+pyarrow
+av
+huggingface_hub
+matplotlib
+pillow
+ftfy
+omegaconf
+regex
+scikit-learn
+submitit
+termcolor
+torchmetrics
+iopath
+-e external/co-tracker

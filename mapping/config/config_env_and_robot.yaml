@@ -1,0 +1,131 @@
+# =============================================================================
+# Joint Env + Robot Neural Point Map Configuration
+# Used by: mapping/train_neural_points_env_and_robot.py
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Run Settings
+# -----------------------------------------------------------------------------
+num_images: -1           # Number of images per episode (-1 for all)
+
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
+dataset_dir: "data/mapping_dataset/task-0021/train"
+output_dir: "data/map_models/task-0021"
+robot_input_path: "data/mapping_dataset/robot/robot_data.hdf5"
+
+# -----------------------------------------------------------------------------
+# Dataset Settings
+# -----------------------------------------------------------------------------
+dataset:
+  original_image_size: 480
+
+# -----------------------------------------------------------------------------
+# Vision Model Settings
+# -----------------------------------------------------------------------------
+model_type: "dino"
+
+dino_model:
+  image_size: 480
+  patch_size: 16
+  backbone_weights_url: null
+  dinotxt_weights_url: null
+
+# -----------------------------------------------------------------------------
+# Neural Point Map Settings (shared)
+# -----------------------------------------------------------------------------
+point_map:
+  voxel_size: 0.02
+  knn_k: 6
+  feature_dim: 64
+  hash_table_size: 8388608   # 2^23.
+  num_nei_cells: 2
+  search_alpha: 0.5
+  temperature: 0.05
+
+# -----------------------------------------------------------------------------
+# Decoder Settings (shared between env and robot)
+# -----------------------------------------------------------------------------
+decoder:
+  hidden_dim: 384
+  num_res_blocks: 2
+  dropout: 0.2
+  train_decoder: true
+
+# -----------------------------------------------------------------------------
+# Encoder Settings (env only)
+# -----------------------------------------------------------------------------
+encoder:
+  hidden_dim: 384
+  num_res_blocks: 2
+  dropout: 0.2
+  use_encoder_init: false
+  train_encoder: true
+
+# -----------------------------------------------------------------------------
+# Training Settings — Env
+# -----------------------------------------------------------------------------
+training:
+  epochs: 20
+  batch_size: 32
+  optimizer_lr: 0.001
+  log_interval: 100
+  save_interval: 5
+
+  # Inter-category contrastive loss
+  lambda_inter: 0.02
+  inter_temperature: 0.1
+  inter_max_samples: 16384     # Total features; split equally per category (env + robot)
+  cross_scene_inter: true      # Cross-scene inter loss with robot as extra category
+
+  # Intra-instance contrastive loss
+  lambda_intra: 0.01
+  intra_temperature: 0.1
+  intra_max_samples: 16384
+
+  # Encoder-Decoder consistency loss
+  lambda_consistency: 1.0
+
+# -----------------------------------------------------------------------------
+# Scene Bounds
+# -----------------------------------------------------------------------------
+# task-0021
+scene_min: [20.0, 5.3, -0.1]
+scene_max: [24.4, 8.3, 2.8]
+
+# task-0022
+# scene_min: [-4.4, -1.2, -0.1]
+# scene_max: [1.1, 7.8, 2.8]
+
+# task-0026
+# scene_min: [0.9, 3.3, -0.1]
+# scene_max: [8.5, 7.7, 2.8]
+
+# -----------------------------------------------------------------------------
+# Wandb Settings
+# -----------------------------------------------------------------------------
+wandb:
+  enabled: false
+  project: "neural-point-map-joint"
+
+# -----------------------------------------------------------------------------
+# Visualization Settings
+# -----------------------------------------------------------------------------
+visualization:
+  enabled: false
+  interval: 1
+
+  include_categories: []
+  filter_background: false
+
+  max_points: 1000000
+  point_size: 0.005
+  z_threshold: 2.5
+  side_by_side_offset: 1.2
+
+  n_components: 3
+  whiten: true
+
+  quantile_low: 0.02
+  quantile_high: 0.98
