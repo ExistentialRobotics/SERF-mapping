@@ -154,7 +154,7 @@ Controls: `T`/`R` jump `+100`/`-100` steps; `F`/`D` step `+1`/`-1` frame.
 
 ## Citation
 
-If you find this repository useful, please cite our paper:
+If you find this repository useful, please consider citing our paper:
 
 ```bibtex
 @article{kim2026serf,
