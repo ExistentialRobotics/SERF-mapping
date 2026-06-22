@@ -1,6 +1,6 @@
 # SERF-mapping
 
-This is the official implementation of:
+Official source code repository for:
 
 **SERF: Spatiotemporal Environment and Robot Feature Map for Long-Horizon Mobile Manipulation**
 
@@ -117,7 +117,8 @@ python tracking/neural_point_tracking.py --task 0021
 
 This offline tracker calls CoTracker at each step, making it slower than the
 online SERF VLA tracker but useful for offline tracking quality. For faster
-inference, refer to the SERF VLA tracking implementation.
+inference, refer to the
+[SERF VLA tracking implementation](https://github.com/ExistentialRobotics/SERF-VLA/blob/main/src/serf_b1k/learning/online_3d_tracker.py).
 
 ### Download Tracked Maps
 
@@ -169,11 +170,12 @@ If you find this repository useful, please consider citing our paper:
 
 ## License
 
-This project is released under the MIT License; see [LICENSE](LICENSE).
+This project is released under the license provided in [LICENSE](LICENSE).
 
 ## Acknowledgements
 
 We thank the [BEHAVIOR-1K](https://github.com/StanfordVL/BEHAVIOR-1K),
 [DINOv3](https://github.com/facebookresearch/dinov3),
 [CoTracker3](https://github.com/facebookresearch/co-tracker), and
-[SAM2](https://github.com/facebookresearch/sam2) teams.
+[SAM2](https://github.com/facebookresearch/sam2) teams for making their
+resources, models, and code publicly available.
