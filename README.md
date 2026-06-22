@@ -6,9 +6,11 @@ This is the official implementation of:
 
 [[arXiv](https://arxiv.org/abs/2606.12956)] [[Website](https://existentialrobotics.org/serf/)] [[Video](https://existentialrobotics.org/serf/assets/video/walk_through_video.mp4)]
 
+This repository contains code for learning, updating, and visualizing SERF environment and robot feature maps. It is focused on the mapping part only.
+
 > Note: this repository does **not** include the VLA component of SERF.
 
-## Environment Setup
+## Installation
 
 Run these commands from the repository root.
 
@@ -39,7 +41,7 @@ hf download suk063/SERF \
   --local-dir data
 ```
 
-To generate the dataset yourself, see [DATASET_GENERATION.md](DATASET_GENERATION.md).
+To generate the dataset yourself, see [DATASET_GENERATION.md](docs/DATASET_GENERATION.md).
 
 ### Extract DINO Embeddings
 
@@ -102,7 +104,7 @@ hf download suk063/SERF \
   --local-dir data
 ```
 
-See [DATASET_GENERATION.md](DATASET_GENERATION.md) to replay demonstrations
+See [DATASET_GENERATION.md](docs/DATASET_GENERATION.md) to replay demonstrations
 yourself.
 
 ### Environment Map Update

@@ -7,7 +7,7 @@ repository root.
 
 Install the following extras only when generating datasets manually. They are
 not required when using the pre-generated datasets linked from
-[README.md](README.md).
+[README.md](../README.md).
 
 ```bash
 git submodule update --init --recursive external/sam2 external/BEHAVIOR-1K
