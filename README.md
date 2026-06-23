@@ -6,7 +6,11 @@ Official source code repository for:
 
 [[arXiv](https://arxiv.org/abs/2606.12956)] [[Website](https://existentialrobotics.org/serf/)] [[Video](https://existentialrobotics.org/serf/assets/video/walk_through_video.mp4)]
 
-This repository contains code for learning, updating, and visualizing SERF environment and robot feature maps. It is focused on the mapping part only.
+This repository provides the mapping code for SERF, covering:
+
+- [Learn SERF maps](#map-feature-learning)
+- [Update SERF maps from demonstrations](#map-update)
+- [Generate SERF mapping datasets](docs/DATASET_GENERATION.md)
 
 > Note: this repository does **not** include the VLA component of SERF.
 
