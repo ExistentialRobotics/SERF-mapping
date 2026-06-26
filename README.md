@@ -8,9 +8,9 @@ Official source code repository for:
 
 This repository provides the mapping code for SERF, covering:
 
-- [Learn SERF maps](#map-feature-learning)
-- [Update SERF maps from demonstrations](#map-update)
-- [Generate SERF mapping datasets](docs/DATASET_GENERATION.md)
+- [Building SERF maps](#building-serf-maps)
+- [Updating SERF maps from demonstrations](#serf-map-update)
+- [Generating mapping datasets](docs/DATASET_GENERATION.md)
 
 > Note: this repository does **not** include the VLA component of SERF. The
 > VLA component code is available in
@@ -28,7 +28,7 @@ python -m pip install --upgrade pip setuptools wheel
 python -m pip install -r requirements.txt
 ```
 
-## Map Feature Learning
+## Building SERF Maps
 
 ### Dataset Preparation
 
@@ -94,7 +94,7 @@ hf download suk063/SERF \
   --local-dir data
 ```
 
-## Map Update
+## SERF Map Update
 
 ### Download Expert Demonstrations
 
