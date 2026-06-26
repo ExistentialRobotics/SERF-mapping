@@ -12,7 +12,9 @@ This repository provides the mapping code for SERF, covering:
 - [Update SERF maps from demonstrations](#map-update)
 - [Generate SERF mapping datasets](docs/DATASET_GENERATION.md)
 
-> Note: this repository does **not** include the VLA component of SERF.
+> Note: this repository does **not** include the VLA component of SERF. The
+> VLA component code is available in
+> [SERF-VLA](https://github.com/ExistentialRobotics/SERF-VLA).
 
 ## Installation
 
